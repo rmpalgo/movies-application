@@ -1,3 +1,6 @@
+const keys = require('./keys');
+console.log(keys.OMBD_KEY);
+
 module.exports = {
 
   getMovies: () => {
@@ -15,5 +18,10 @@ module.exports = {
     })
         .then( response => response.json() )
         .catch( error => console.log(error));
+  },
+
+  getOMBDData: (addMovieTitle) => {
+    return fetch(`http://www.omdbapi.com?s=${addMovieTitle}&apikey=${keys.OMBD_KEY}`)
+        .then( response => response.json() );
   }
 };

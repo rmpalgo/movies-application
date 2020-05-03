@@ -3,11 +3,10 @@
  */
 import sayHello from './hello';
 sayHello('World');
-
 /**
  * require style imports
  */
-const {getMovies, addMovie} = require('./api.js');
+const {getMovies, addMovie, getOMBDData} = require('./api.js');
 
 $(document).ready( () => {
     console.log("DOM IS READY!");
@@ -16,7 +15,6 @@ $(document).ready( () => {
         e.preventDefault();
         renderLoading();
         addMovieToJSON();
-        displayMoviesFromJSON();
     });
 
     function displayMoviesFromJSON() {
@@ -24,10 +22,10 @@ $(document).ready( () => {
             console.log('Here are all the movies:');
             let HTML = ``;
 
-            movies.forEach(({title, rating, id}) => {
+            movies.forEach(({title, rating, poster, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
                 HTML += `<div class="card mt-5" style="width: 14rem; height: 20rem;">
-                            <img src="..." class="card-img-top" alt="...">
+                            <img src="${poster}" class="card-img-top" alt="...">
                             <div class="card-body">
                                  <p>${id}</p>
                                  <p>${title}</p>
@@ -43,7 +41,7 @@ $(document).ready( () => {
         });
     }
 
-    //Initialize Page
+   // Initialize Page
     ( () => { renderLoading();
         displayMoviesFromJSON();
     })();
@@ -54,15 +52,15 @@ $(document).ready( () => {
     function addMovieToJSON () {
         let movieTitleValue = $('#add-title').val();
         let ratingValue = $('#rate-movie').val();
-        addMovie(
-            {
-                "title": movieTitleValue,
-                "rating": ratingValue
-            }
-        ).then( response => {
-         console.log(response);
-         activateDisplay();
-        })
+        getOMBDMovieDataFromAPI(movieTitleValue, ratingValue);
+        // addMovie(
+        //     {
+        //         "title": movieTitleValue,
+        //         "rating": ratingValue
+        //     }
+        // ).then( response => {
+        //  console.log(response);
+        // })
 
     }
 
@@ -70,7 +68,20 @@ $(document).ready( () => {
         $('#movies-display').html('<p id="loading" class="mt-5 text-center">Loading<span>.</span><span>.</span><span>.</span></p>')
     }
 
-
+    function getOMBDMovieDataFromAPI (movieTitleValue, ratingValue) {
+        renderLoading();
+        getOMBDData( movieTitleValue ).then( movieData => {
+            console.log(movieData.Search[0].Poster)
+            addMovie( {
+                title: movieTitleValue,
+                rating: ratingValue,
+                poster: movieData.Search[0].Poster
+            }).then( result => {
+                console.log(result)
+                displayMoviesFromJSON();
+            });
+        }).catch( error => console.log(error) );
+    }
 
 
 });
