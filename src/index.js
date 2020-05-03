@@ -16,6 +16,7 @@ $(document).ready( () => {
         e.preventDefault();
         renderLoading();
         addMovieToJSON();
+        displayMoviesFromJSON();
     });
 
     function displayMoviesFromJSON() {
@@ -25,7 +26,7 @@ $(document).ready( () => {
 
             movies.forEach(({title, rating, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
-                HTML += `<div class="card" style="width: 12rem;">
+                HTML += `<div class="card mt-5" style="width: 14rem; height: 20rem;">
                             <img src="..." class="card-img-top" alt="...">
                             <div class="card-body">
                                  <p>${id}</p>
