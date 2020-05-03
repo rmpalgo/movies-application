@@ -1,5 +1,8 @@
 html, body {
     height: 100%;
+    background-color: #121621;
+    color: #F6B200;
+    font-family: 'Raleway', sans-serif;
 }
 
 .container {
@@ -8,3 +11,35 @@ html, body {
     transform: translateY(-100%);
     text-align: center;
 }
+
+ul li a {
+    color: white;
+    display: block;
+    padding: 0 15px;
+
+}
+
+ul li a:hover {
+    color: #F6B200;
+    text-decoration: underline;
+}
+
+#notflix-icon {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#button-addon2 {
+    color: #121621;
+    font-weight: bold;
+    background: #F6B200;
+    border: transparent;
+}
+
+input#add-title {
+    display: block;
+    border: transparent;
+    background: #272b36;
+    padding: 0 30px;
+}
+
