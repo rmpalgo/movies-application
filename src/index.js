@@ -7,14 +7,53 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies} = require('./api.js');
+const {getMovies, addMovie} = require('./api.js');
 
-getMovies().then((movies) => {
-  console.log('Here are all the movies:');
-  movies.forEach(({title, rating, id}) => {
-    console.log(`id#${id} - ${title} - rating: ${rating}`);
-  });
-}).catch((error) => {
-  alert('Oh no! Something went wrong.\nCheck the console for details.')
-  console.log(error);
+$(document).ready( () => {
+
+    function displayMoviesFromJSON() {
+        getMovies().then((movies) => {
+            console.log('Here are all the movies:');
+            let HTML = ``;
+
+            movies.forEach(({title, rating, id}) => {
+                console.log(`id#${id} - ${title} - rating: ${rating}`);
+                HTML += `<div class="card" style="width: 12rem;">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                 <p>${id}</p>
+                                 <p>${title}</p>
+                                 <p>${rating}</p>
+                            </div>
+                          </div>`
+            });
+
+            $('#movies-display').html(HTML);
+
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    function activateDisplay () {
+        renderLoading();
+        displayMoviesFromJSON();
+    }
+
+    activateDisplay();
+
+
+    function addMovie (movieObj) {
+
+    }
+
+    function renderLoading () {
+        $('#movies-display').html('<p id="loading" class="mt-5 text-center">Loading<span>.</span><span>.</span><span>.</span></p>')
+    }
+
+
+
+
 });
+
+
