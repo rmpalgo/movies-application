@@ -10,6 +10,13 @@ sayHello('World');
 const {getMovies, addMovie} = require('./api.js');
 
 $(document).ready( () => {
+    console.log("DOM IS READY!");
+
+    $('#button-add').click( (e) => {
+        e.preventDefault();
+        renderLoading();
+        addMovieToJSON();
+    });
 
     function displayMoviesFromJSON() {
         getMovies().then((movies) => {
@@ -35,15 +42,26 @@ $(document).ready( () => {
         });
     }
 
-    function activateDisplay () {
-        renderLoading();
+    //Initialize Page
+    ( () => { renderLoading();
         displayMoviesFromJSON();
-    }
-
-    activateDisplay();
+    })();
 
 
-    function addMovie (movieObj) {
+
+
+    function addMovieToJSON () {
+        let movieTitleValue = $('#add-title').val();
+        let ratingValue = $('#rate-movie').val();
+        addMovie(
+            {
+                "title": movieTitleValue,
+                "rating": ratingValue
+            }
+        ).then( response => {
+         console.log(response);
+         activateDisplay();
+        })
 
     }
 

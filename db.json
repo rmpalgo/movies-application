@@ -9,6 +9,26 @@
       "title": "Star Wars: A New Hope",
       "rating": "5",
       "id": 2
+    },
+    {
+      "title": "New Movie",
+      "rating": "3",
+      "id": 3
+    },
+    {
+      "title": "New Movie 2",
+      "rating": "3",
+      "id": 4
+    },
+    {
+      "title": "New Movie 3",
+      "rating": "3",
+      "id": 5
+    },
+    {
+      "title": "New Movie 4",
+      "rating": "4",
+      "id": 6
     }
   ]
 }
