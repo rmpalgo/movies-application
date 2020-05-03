@@ -51,10 +51,10 @@ select#rate-movie {
     object-fit: cover;
 }
 
-.one-edge-shadow {
-    -webkit-box-shadow: 0 8px 6px -6px black;
-    -moz-box-shadow: 0 8px 6px -6px black;
-    box-shadow: 0 8px 6px -6px black;
+.card-img-top {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #F6B200;
 }
 
 
