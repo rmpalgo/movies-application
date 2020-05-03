@@ -27,9 +27,8 @@ $(document).ready( () => {
                 HTML += `<div class="card mt-5" style="width: 14rem; height: 20rem;">
                             <img src="${poster}" class="card-img-top" alt="...">
                             <div class="card-body">
-                                 <p>${id}</p>
-                                 <p>${title}</p>
-                                 <p>${rating}</p>
+                                 <p>${title}  <span>${rating}</span> </p>
+                                
                             </div>
                           </div>`
             });
@@ -47,21 +46,10 @@ $(document).ready( () => {
     })();
 
 
-
-
     function addMovieToJSON () {
         let movieTitleValue = $('#add-title').val();
         let ratingValue = $('#rate-movie').val();
         getOMBDMovieDataFromAPI(movieTitleValue, ratingValue);
-        // addMovie(
-        //     {
-        //         "title": movieTitleValue,
-        //         "rating": ratingValue
-        //     }
-        // ).then( response => {
-        //  console.log(response);
-        // })
-
     }
 
     function renderLoading () {
@@ -71,7 +59,9 @@ $(document).ready( () => {
     function getOMBDMovieDataFromAPI (movieTitleValue, ratingValue) {
         renderLoading();
         getOMBDData( movieTitleValue ).then( movieData => {
-            console.log(movieData.Search[0].Poster)
+            console.log(movieData);
+            let moviePoster = movieData.Search[0].Poster;
+            console.log(moviePoster);
             addMovie( {
                 title: movieTitleValue,
                 rating: ratingValue,
