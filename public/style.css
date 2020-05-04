@@ -5,10 +5,6 @@ html, body {
     font-family: 'Raleway', sans-serif;
 }
 
-.container {
-
-}
-
 ul li a {
     color: white;
     display: block;
@@ -56,19 +52,7 @@ div.card {
     margin-bottom: 25px;
 }
 
-.card i {
-    position: relative;
-    top: 30px;
-    left: 165px;
-    cursor: pointer;
-}
 
-span.rightbox {
-    position: relative;
-    z-index: 1;
-    top: 30px;
-    left: 125px;
-}
 
 
 
@@ -108,36 +92,4 @@ span.rightbox {
 }
 
 /*LOADING ANIMATION CSS*/
-
-/* SLIDING ANIMATION */
-
-div .holdingbox {
-    display : inline-block;
-}
-.holdingbox {
-    position: relative;
-    top: 0;
-}
-.leftbox {
-    position: relative;
-    top: 0;
-    left:0;
-    display:inline-block;
-}
-.rightbox {
-    position: relative;
-    display:inline-block;
-    overflow:hidden;
-    width:0;
-    height:30px;
-    vertical-align:top;
-}
-.content{
-    width:100px;
-    position:absolute;
-    left:0;
-    top:0;
-}
-
-/* SLIDING ANIMATION */
 

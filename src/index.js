@@ -24,12 +24,7 @@ $(document).ready( () => {
 
             movies.forEach(({title, rating, poster, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
-                HTML += `<div class="card mt-6 bg-transparent" style="width: 11rem;"><div class="holdingbox">
- <span class="leftbox"><i class="fas fa-ellipsis-v"></i></span>
- <span class="rightbox">
-     <span class="content">Edit</span>
- </span>
-</div>
+                HTML += `<div class="card mt-6 bg-transparent" style="width: 11rem;">
  <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
             });
 
