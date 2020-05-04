@@ -51,7 +51,8 @@ $(document).ready( () => {
             e.preventDefault();
             let dataID = $(this).attr('data-id').split("/");
             let title = dataID[0];
-            let uniqueID = dataID[1];
+           let uniqueID = dataID[1];
+           console.log(uniqueID);
 
             console.log("DATA ID", title);
             $(this).parent().parent().next().next().html(`<input class="input-text bg-transparent border-0" type="text" value="${title}" autofocus>
@@ -64,14 +65,14 @@ $(document).ready( () => {
                                         </select><button class="mt-2 save-button" data-id="${uniqueID}" id="${uniqueID}">Save</button>`)
 
             //activate click listener for save button
-            $('.save-button').on('click', (e, uniqueID) => {
+            $('.save-button').on('click', (e) => {
                 e.preventDefault();
                 console.log("CLICKED");
                 let newTitle =  $(this).parents().eq(2).children().last().children().first().val();
                 console.log(newTitle);
                 let newRating = $(this).parents().eq(2).children().last().children().first().next().val();
                 console.log(newRating);
-                // editMovieToJSON(uniqueID, newTitle);
+                editMovieToJSON(uniqueID, newTitle, newRating);
             });
         });
     }
@@ -83,10 +84,26 @@ $(document).ready( () => {
         getOMBDMovieDataFromAPI(movieTitleValue, ratingValue);
     }
 
-    // function editMovieToJSON (uniqueID, newTitle) {
-    //     console.log(uniqueID);
-    //     console.log(newTitle);
-    // }
+    function editMovieToJSON (uniqueID, newTitle, newRating) {
+        console.log('fromMovieToJSON', uniqueID);
+        console.log('fromMovieToJSON', newTitle);
+        console.log('fromMovieToJSON', newRating);
+        getOMBDAndEditMovie(newTitle, newRating, uniqueID);
+    }
+
+    function getOMBDAndEditMovie (newTitle, newRating, uniqueID) {
+        renderLoading();
+        getOMBDData( newTitle ).then( movieData => {
+            let newMoviePoster = movieData.Search[0].Poster;
+            let newMovieObj = {
+                title: newTitle,
+                rating: newRating,
+                poster: newMoviePoster
+            }
+            editMovie(newMovieObj, uniqueID).then( response => { console.log(response); displayMoviesFromJSON();})
+                .catch( error => console.log(error) );
+        });
+    }
 
 
     function renderLoading () {

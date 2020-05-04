@@ -20,15 +20,13 @@ module.exports = {
         .catch( error => console.log(error));
   },
   editMovie: (movieObj, id) => {
-    fetch(`/api/movies/${id}`, {
+    return fetch(`/api/movies/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(movieObj),
-    })
-        .then( response => console.log(response) )
-        .catch( error => console.log(error) );
+    });
   },
 
   getOMBDData: (addMovieTitle) => {
