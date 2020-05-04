@@ -19,6 +19,17 @@ module.exports = {
         .then( response => response.json() )
         .catch( error => console.log(error));
   },
+  editMovie: (movieObj, id) => {
+    fetch(`/api/movies/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(movieObj),
+    })
+        .then( response => console.log(response) )
+        .catch( error => console.log(error) );
+  },
 
   getOMBDData: (addMovieTitle) => {
     return fetch(`http://www.omdbapi.com?s=${addMovieTitle}&apikey=${keys.OMBD_KEY}`)

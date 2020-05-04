@@ -87,7 +87,7 @@ a:hover {
     background: green;
 }
 
-button#save-button {
+button.save-button {
     background: #F6B200;
     color: #121621;
     border: none;

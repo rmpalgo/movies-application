@@ -6,14 +6,13 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies, addMovie, getOMBDData} = require('./api.js');
+const {getMovies, addMovie, getOMBDData, editMovie} = require('./api.js');
 
 $(document).ready( () => {
     console.log("DOM IS READY!");
 
     $('#button-add').click( (e) => {
         e.preventDefault();
-        renderLoading();
         addMovieToJSON();
     });
 
@@ -28,7 +27,7 @@ $(document).ready( () => {
 <div class="dropdown">
   <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
   <div class="dropdown-content">
-  <p class="edit-title" data-id="${title}">Edit</p>
+  <p class="edit-title" data-id="${title}/${id}">Edit</p>
   <p>Delete</p>
   </div>
 </div>
@@ -36,6 +35,7 @@ $(document).ready( () => {
             });
             $('#movies-display').html(HTML);
             editMovieForm();
+
         }).catch((error) => {
             console.log(error);
         });
@@ -49,16 +49,30 @@ $(document).ready( () => {
     function editMovieForm() {
         $('.edit-title').on('click', function (e) {
             e.preventDefault();
-            let titleMovie = $(this).attr('data-id');
-            console.log("DATA ID", titleMovie);
-            $(this).parent().parent().next().next().html(`<input class="input-text bg-transparent border-0" type="text" value="${titleMovie}" autofocus>
+            let dataID = $(this).attr('data-id').split("/");
+            let title = dataID[0];
+            let uniqueID = dataID[1];
+
+            console.log("DATA ID", title);
+            $(this).parent().parent().next().next().html(`<input class="input-text bg-transparent border-0" type="text" value="${title}" autofocus>
                                        <select class="movie-rating mt-2">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
                                             <option value="5">5</option>
-                                        </select><button id="save-button" class="mt-2">Save</button>`)
+                                        </select><button class="mt-2 save-button" data-id="${uniqueID}" id="${uniqueID}">Save</button>`)
+
+            //activate click listener for save button
+            $('.save-button').on('click', (e, uniqueID) => {
+                e.preventDefault();
+                console.log("CLICKED");
+                let newTitle =  $(this).parents().eq(2).children().last().children().first().val();
+                console.log(newTitle);
+                let newRating = $(this).parents().eq(2).children().last().children().first().next().val();
+                console.log(newRating);
+                // editMovieToJSON(uniqueID, newTitle);
+            });
         });
     }
 
@@ -68,6 +82,12 @@ $(document).ready( () => {
         let ratingValue = $('#rate-movie').val();
         getOMBDMovieDataFromAPI(movieTitleValue, ratingValue);
     }
+
+    // function editMovieToJSON (uniqueID, newTitle) {
+    //     console.log(uniqueID);
+    //     console.log(newTitle);
+    // }
+
 
     function renderLoading () {
         $('#movies-display').html('<p id="loading" class="mt-5 text-center">Loading<span>.</span><span>.</span><span>.</span></p>')
