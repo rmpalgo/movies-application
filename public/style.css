@@ -55,6 +55,46 @@ div.card {
     margin-bottom: 25px;
 }
 
+.input-text {
+    color: #F6B200;
+}
+
+.movie-rating {
+    color: white;
+    border: none;
+    background: transparent;
+}
+
+i.three-dots {
+    cursor: pointer;
+    position: relative;
+    width: 13%;
+    top: 20px;
+    left: 155px;
+}
+
+div.dropdown-content {
+   background: #121621;
+    opacity: 0.8;
+}
+
+div.dropdown-content p {
+    cursor: pointer;
+}
+
+a:hover {
+
+    background: green;
+}
+
+button#save-button {
+    background: #F6B200;
+    color: #121621;
+    border: none;
+    margin: 0 0 0 10px;
+}
+
+
 
 
 
@@ -96,3 +136,21 @@ div.card {
 
 /*LOADING ANIMATION CSS*/
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 10px 12px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

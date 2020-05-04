@@ -25,17 +25,17 @@ $(document).ready( () => {
             movies.forEach(({title, rating, poster, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
                 HTML += `<div class="card mt-6 bg-transparent" style="width: 11rem;">
- <img src="${poster}" data-id="${title}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
+<div class="dropdown">
+  <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
+  <div class="dropdown-content">
+  <p class="edit-title" data-id="${title}">Edit</p>
+  <p>Delete</p>
+  </div>
+</div>
+ <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
             });
             $('#movies-display').html(HTML);
-            $('.card-img-top').on('click', function (e) {
-                e.preventDefault();
-                let titleMovie = this.getAttribute('data-id');
-                console.log("DATA ID", titleMovie);
-                console.log($(this).parent());
-            });
-
-
+            editMovieForm();
         }).catch((error) => {
             console.log(error);
         });
@@ -45,6 +45,22 @@ $(document).ready( () => {
     ( () => { renderLoading();
         displayMoviesFromJSON();
     })();
+
+    function editMovieForm() {
+        $('.edit-title').on('click', function (e) {
+            e.preventDefault();
+            let titleMovie = $(this).attr('data-id');
+            console.log("DATA ID", titleMovie);
+            $(this).parent().parent().next().next().html(`<input class="input-text bg-transparent border-0" type="text" value="${titleMovie}" autofocus>
+                                       <select class="movie-rating mt-2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select><button id="save-button" class="mt-2">Save</button>`)
+        });
+    }
 
 
     function addMovieToJSON () {
