@@ -25,11 +25,16 @@ $(document).ready( () => {
             movies.forEach(({title, rating, poster, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
                 HTML += `<div class="card mt-6 bg-transparent" style="width: 11rem;">
- <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
+ <img src="${poster}" data-id="${title}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
+            });
+            $('#movies-display').html(HTML);
+            $('.card-img-top').on('click', function (e) {
+                e.preventDefault();
+                let titleMovie = this.getAttribute('data-id');
+                console.log("DATA ID", titleMovie);
+                console.log($(this).parent());
             });
 
-            $('#movies-display').html(HTML);
-            iconSelector();
 
         }).catch((error) => {
             console.log(error);
@@ -69,14 +74,7 @@ $(document).ready( () => {
         }).catch( error => console.log(error) );
     }
 
-    function iconSelector () {
-        $('.holdingbox').hover(function(){
-            let selector = $(this).children().first().next();
-            $(selector).animate({width: '90px'}, 1000)
-        }, function(){
-            $('.rightbox').animate({width: '0'}, 1000)
-        });
-    }
+
 
 
 
