@@ -6,7 +6,7 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies, addMovie, getOMBDData, editMovie} = require('./api.js');
+const {getMovies, addMovie, getOMBDData, editMovie, deleteMovie} = require('./api.js');
 
 $(document).ready( () => {
     console.log("DOM IS READY!");
@@ -24,17 +24,22 @@ $(document).ready( () => {
             movies.forEach(({title, rating, poster, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
                 HTML += `<div class="card mt-6 bg-transparent" style="width: 11rem;">
-<div class="dropdown">
-  <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
-  <div class="dropdown-content">
-  <p class="edit-title" data-id="${title}/${id}">Edit</p>
-  <p>Delete</p>
-  </div>
-</div>
- <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
+                            <div class="dropdown">
+                                <span>
+                                <i class="fas fa-ellipsis-h three-dots"></i>
+                                </span>
+                                <div class="dropdown-content">
+                                    <p class="edit-title" data-id="${title}/${id}">Edit</p>
+                                    <p class="delete-button" data-id="${id}" >Delete</p>
+                                </div>
+                            </div>
+                            <img src="${poster}" class="card-img-top" alt="...">
+                            <p class="pt-1"><span>${title}</span> <span>${rating}</span></p>
+                         </div>`
             });
             $('#movies-display').html(HTML);
             editMovieForm();
+            deleteMovieFromJSON();
 
         }).catch((error) => {
             console.log(error);
@@ -51,8 +56,8 @@ $(document).ready( () => {
             e.preventDefault();
             let dataID = $(this).attr('data-id').split("/");
             let title = dataID[0];
-           let uniqueID = dataID[1];
-           console.log(uniqueID);
+            let uniqueID = dataID[1];
+            console.log(uniqueID);
 
             console.log("DATA ID", title);
             $(this).parent().parent().next().next().html(`<input class="input-text bg-transparent border-0" type="text" value="${title}" autofocus>
@@ -72,9 +77,24 @@ $(document).ready( () => {
                 console.log(newTitle);
                 let newRating = $(this).parents().eq(2).children().last().children().first().next().val();
                 console.log(newRating);
-                editMovieToJSON(uniqueID, newTitle, newRating);
+                getOMBDAndEditMovie(newTitle, newRating, uniqueID);
             });
         });
+    }
+
+    function deleteMovieFromJSON () {
+        $('.delete-button').on('click', function (e) {
+            e.preventDefault();
+            renderLoading();
+            let dataID = $(this).attr('data-id');
+            console.log(dataID);
+            console.log('CLICKED DELETE BUTTON');
+            deleteMovie(dataID).then( response => {
+                console.log(response);
+                displayMoviesFromJSON();
+            });
+
+        })
     }
 
 
@@ -82,13 +102,6 @@ $(document).ready( () => {
         let movieTitleValue = $('#add-title').val();
         let ratingValue = $('#rate-movie').val();
         getOMBDMovieDataFromAPI(movieTitleValue, ratingValue);
-    }
-
-    function editMovieToJSON (uniqueID, newTitle, newRating) {
-        console.log('fromMovieToJSON', uniqueID);
-        console.log('fromMovieToJSON', newTitle);
-        console.log('fromMovieToJSON', newRating);
-        getOMBDAndEditMovie(newTitle, newRating, uniqueID);
     }
 
     function getOMBDAndEditMovie (newTitle, newRating, uniqueID) {
@@ -100,7 +113,10 @@ $(document).ready( () => {
                 rating: newRating,
                 poster: newMoviePoster
             }
-            editMovie(newMovieObj, uniqueID).then( response => { console.log(response); displayMoviesFromJSON();})
+            editMovie(newMovieObj, uniqueID).then( response => {
+                 console.log(response);
+                 displayMoviesFromJSON();
+            })
                 .catch( error => console.log(error) );
         });
     }

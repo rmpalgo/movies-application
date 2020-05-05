@@ -19,8 +19,8 @@ module.exports = {
         .then( response => response.json() )
         .catch( error => console.log(error));
   },
-  editMovie: (movieObj, id) => {
-    return fetch(`/api/movies/${id}`, {
+  editMovie: (movieObj, uniqueID) => {
+    return fetch(`/api/movies/${uniqueID}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -28,6 +28,15 @@ module.exports = {
       body: JSON.stringify(movieObj),
     });
   },
+  deleteMovie: (id, movieObj) => {
+    return fetch(`api/movies/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(movieObj),
+    });
+},
 
   getOMBDData: (addMovieTitle) => {
     return fetch(`http://www.omdbapi.com?s=${addMovieTitle}&apikey=${keys.OMBD_KEY}`)
